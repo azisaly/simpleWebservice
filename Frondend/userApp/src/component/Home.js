@@ -50,9 +50,10 @@ export default class Home extends Component {
                     </View>
 
                     <View>
-                        {this.state.data.map((user) => {
+                        {this.state.data.map((user, i) => {
                             return (
                                 <CardUser
+                                    key={i}
                                     id={user.id}
                                     name={user.name}
                                     email={user.email}

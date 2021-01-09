@@ -1,6 +1,7 @@
-import axios from 'axios'
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import axios from 'axios'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
+const qs = require('query-string');
 
 export default class Register extends Component {
     constructor(props) {
@@ -30,22 +31,34 @@ export default class Register extends Component {
 
 
     klikPost() {
-        const user = {
-            name: this.state.name,
-            email: this.state.email,
-            phone: this.state.phone,
-            address: 'this.state.address'
+        if (this.state.name && this.state.email && this.state.phone && this.state.address) {
+            const user = {
+                name: this.state.name,
+                email: this.state.email,
+                phone: this.state.phone,
+                address: this.state.address
+            }
+            var config = {
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                responseType: 'blob'
+            };
+            var url = 'http://10.107.96.149:3000/user'
+            axios.post(url, qs.stringify(user), config)
+                .then((res) => {
+                    Alert.alert("Data Berhasil Ditambahkan");
+                    this.props.navigation.jumpTo('Home')
+                    console.log(res.data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+            console.log(this.state);
         }
-        var url = 'http://10.107.96.149:3000/user'
-        axios.post(url, user)
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-        console.log(this.state);
+        else {
+            Alert.alert('Error, Harap diisi dengan lengkap')
+        }
     }
+
 
 
 

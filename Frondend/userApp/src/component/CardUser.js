@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 
 const CardUser = (props, id) => {
     return (
-        <View style={styles.container} id={props.id}>
+        <View style={styles.container} id={props.key} >
             <View style={styles.card} >
                 <Text>name : {props.name}</Text>
                 <Text>email : {props.email}</Text>
